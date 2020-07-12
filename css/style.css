@@ -44,11 +44,18 @@ main {
   text-align: center;
   line-height: 160px;
   font-size: 24px;
+  cursor: pointer;
 }
 
-.prompt {
+.question {
   line-height: 2.5;
   display: inline-block;
+  vertical-align: middle;
+}
+
+.answer {
+  line-height: 2.5;
+  display: none;
   vertical-align: middle;
 }
 
