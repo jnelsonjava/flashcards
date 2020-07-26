@@ -6,14 +6,21 @@ and reveal their answers on click.
 */
 
 // store question and answer card sides in variables
-var question;
-var answer;
-var card;
+var questionEl;
+var answerEl;
+var cardEl;
+Card.cardArray = [];
 
-question = document.getElementsByClassName('question')[0];
-answer = document.getElementsByClassName('answer')[0];
-card = document.getElementsByClassName('card')[0];
+questionEl = document.getElementsByClassName('question')[0];
+answerEl = document.getElementsByClassName('answer')[0];
+cardEl = document.getElementsByClassName('card')[0];
 
+function Card(question, answer) {
+  this.question = question;
+  this.answer = answer;
+
+  Card.cardArray.push(this);
+}
 
 // create functions to switch display value between inline-block and none
 function setDisplayNone(cardSide) {
@@ -26,14 +33,14 @@ function setDisplayInlineBlock(cardSide) {
 
 // add functions that switch displays between question and answer
 
-function showAnswer(question, answer) {
-  setDisplayNone(question);
-  setDisplayInlineBlock(answer);
+function showAnswer(questionEl, answerEl) {
+  setDisplayNone(questionEl);
+  setDisplayInlineBlock(answerEl);
 }
 
 function showQuestion() {
-  setDisplayNone(answer);
-  setDisplayInlineBlock(question);
+  setDisplayNone(answerEl);
+  setDisplayInlineBlock(questionEl);
 }
 
 // make something to respond to click on card
@@ -46,22 +53,33 @@ function sideIsVisible(cardSide) {
   }
 }
 
-function userClickCard(question, answer) {
+function userClickCard(questionEl, answerEl) {
   console.log('clicked?')
-  if (sideIsVisible(question)) {
-    showAnswer(question, answer);
+  if (sideIsVisible(questionEl)) {
+    showAnswer(questionEl, answerEl);
   } else {
-    showQuestion(question, answer);
+    showQuestion(questionEl, answerEl);
   }
+}
+
+Card.swap = function() {
+  var nextCardIndex = Math.floor(Math.random() * Card.cardArray.length);
+  questionEl.textContent = Card.cardArray[nextCardIndex].question;
+  answerEl.textContent = Card.cardArray[nextCardIndex].answer;
 }
 
 
 
 
+
+new Card('what is the first question?', 'this is the first question');
+new Card('is this the second question?', 'yes, this is thes second questions');
+
+
 // adjusting cursor for clicking - https://stackoverflow.com/questions/1057416/how-to-make-div-click-able
 
-card.onclick = function(){
-  userClickCard(question, answer);
+cardEl.onclick = function(){
+  userClickCard(questionEl, answerEl);
 }
 
 
